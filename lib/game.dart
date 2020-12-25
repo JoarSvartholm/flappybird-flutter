@@ -19,42 +19,37 @@ class MainGame extends StatefulWidget {
 
 class _MainGameState extends State<MainGame> {
   final GlobalKey<BirdState> birdKey = GlobalKey(debugLabel: "Bird");
+  GlobalKey<Gate2State> gate1 = GlobalKey();
+  final GlobalKey<Gate2State> gate2 = GlobalKey();
 
   static final Duration duration = Duration(milliseconds: 50);
 
-  double barrier1 = 1;
-  double barrier2 = 2;
   bool hasStarted = false;
 
   void startGame() {
-    hasStarted = true;
     widget.onScoreReset();
     birdKey.currentState.reset();
+    setState(() {
+      hasStarted = true;
+    });
     Timer.periodic(duration, (timer) {
       birdKey.currentState.step();
+      gate1.currentState.move();
+      gate2.currentState.move();
+      if (!gate1.currentState.onScreen) {
+        gate1.currentState.reset();
+        widget.onScoreUpdate();
+      }
+      if (!gate2.currentState.onScreen) {
+        gate2.currentState.reset();
+        widget.onScoreUpdate();
+      }
       if (!birdKey.currentState.alive) {
         setState(() {
           timer.cancel();
           hasStarted = false;
         });
       }
-
-      setState(() {
-        barrier1 -= 0.05;
-        barrier2 -= 0.05;
-        if (barrier1 < -1.5) {
-          barrier1 = 2.5;
-          widget.onScoreUpdate();
-        }
-        if (barrier2 < -1.5) {
-          barrier2 = 2.5;
-          widget.onScoreUpdate();
-        }
-      });
-
-    });
-    setState(() {
-      hasStarted = hasStarted;
     });
   }
 
@@ -72,12 +67,8 @@ class _MainGameState extends State<MainGame> {
         color: Colors.blue,
         child: Stack(children: [
           Bird(key: birdKey, duration: duration),
-          Gate(level: 0.4, opening: 0.35, position: barrier1),
-          Gate(
-            level: 0.3,
-            opening: 0.4,
-            position: barrier2,
-          ),
+          Gate2(key: gate1, level: 0.4, opening: 0.35, position: 0.5),
+          Gate2(key: gate2, level: 0.2, opening: 0.45, position: 2.1),
           Container(
               alignment: Alignment(0, -0.25),
               child: hasStarted
