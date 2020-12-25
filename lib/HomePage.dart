@@ -1,16 +1,8 @@
-import 'dart:async';
-
-import 'package:flappybird/bird.dart';
 import 'package:flappybird/game.dart';
 import 'package:flappybird/score.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   final GlobalKey<SimpleScoreBoardState> scoreKey =
       GlobalKey(debugLabel: "Simple score board");
 
