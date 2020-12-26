@@ -9,10 +9,7 @@ class Gate extends StatefulWidget {
   final Duration duration;
   static final double initialVelocity = 0.5;
 
-  Gate({Key key,
-    this.width = 0.2,
-    this.duration,
-    this.position = 0.5})
+  Gate({Key key, this.width = 0.2, this.duration, this.position = 0.5})
       : super(key: key);
 
   @override
@@ -99,10 +96,7 @@ class GateState extends State<Gate> {
         AnimatedContainer(
           duration: animationDuration,
           alignment: FractionalOffset(position / (1 - widget.width), 0),
-          child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(pi),
-              child: top),
+              child: top
         ),
       ],
     );
@@ -118,15 +112,14 @@ class SimpleBarrier extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      widthFactor: width,
-      heightFactor: height,
-           child: Container(
-              height: 30,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [Colors.green[500], Colors.green[800]]))
-            )
-      );
+        widthFactor: width,
+        heightFactor: height,
+        child: Container(
+            height: 30,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Colors.green[500], Colors.green[800]]))));
   }
 }
