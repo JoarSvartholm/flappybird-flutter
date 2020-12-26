@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -8,11 +9,10 @@ class Gate extends StatefulWidget {
   final Duration duration;
   static final double initialVelocity = 0.5;
 
-  Gate(
-      {Key key,
-      this.width = 0.2,
-      this.duration,
-      this.position = 0.5})
+  Gate({Key key,
+    this.width = 0.2,
+    this.duration,
+    this.position = 0.5})
       : super(key: key);
 
   @override
@@ -120,9 +120,13 @@ class SimpleBarrier extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: width,
       heightFactor: height,
-      child: Container(
-        color: Colors.green,
-      ),
-    );
+           child: Container(
+              height: 30,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Colors.green[500], Colors.green[800]]))
+            )
+      );
   }
 }
