@@ -6,6 +6,7 @@ class Gate extends StatefulWidget {
   final width;
   final position;
   final Duration duration;
+  static final double initialVelocity = 0.5;
 
   Gate(
       {Key key,
@@ -22,7 +23,7 @@ class GateState extends State<Gate> {
   var rand = Random();
   double position;
   bool onScreen = true;
-  double velocity = 0.5;
+  double velocity = Gate.initialVelocity;
   Duration animationDuration = Duration(milliseconds: 0);
 
   SimpleBarrier top;
@@ -33,10 +34,14 @@ class GateState extends State<Gate> {
   }
 
   void updateBarriers() {
-    double level1 = rand.nextDouble() * 0.5 + 0.1;
-    double opening1 = rand.nextDouble() * (1 - level1 - 0.1 - 0.3) + 0.3;
-    bottom = SimpleBarrier(height: level1);
-    top = SimpleBarrier(height: 1 - level1 - opening1);
+    double level = rand.nextDouble() * 0.5 + 0.1;
+    double opening = rand.nextDouble() * (1 - level - 0.1 - 0.3) + 0.3;
+    bottom = SimpleBarrier(height: level);
+    top = SimpleBarrier(height: 1 - level - opening);
+  }
+
+  void increaseVelocity() {
+    velocity += 0.1;
   }
 
   void move() {
@@ -70,6 +75,7 @@ class GateState extends State<Gate> {
       onScreen = true;
       position = widget.position;
       animationDuration = Duration(milliseconds: 0);
+      velocity = Gate.initialVelocity;
     });
   }
 

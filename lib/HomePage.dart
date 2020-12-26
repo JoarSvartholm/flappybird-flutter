@@ -17,6 +17,8 @@ class HomePage extends StatelessWidget {
                 scoreKey.currentState.reset();
               }, onScoreUpdate: () {
                 scoreKey.currentState.increaseScore();
+              }, scoreFunction: () {
+                return scoreKey.currentState.getScore();
               })),
           Container(
             height: 15,

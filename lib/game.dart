@@ -10,8 +10,9 @@ class MainGame extends StatefulWidget {
 
   final void Function() onScoreUpdate;
   final void Function() onScoreReset;
+  final int Function() scoreFunction;
 
-  MainGame({this.onScoreUpdate, this.onScoreReset});
+  MainGame({this.onScoreUpdate, this.onScoreReset, this.scoreFunction});
 
   @override
   _MainGameState createState() => _MainGameState();
@@ -41,10 +42,12 @@ class _MainGameState extends State<MainGame> {
       if (!gate1.currentState.onScreen) {
         gate1.currentState.restart();
         widget.onScoreUpdate();
+        increaseVelocityIfValid();
       }
       if (!gate2.currentState.onScreen) {
         gate2.currentState.restart();
         widget.onScoreUpdate();
+        increaseVelocityIfValid();
       }
       if (gate1.currentState.isInside(birdKey.currentState.getAsRect()) ||
           gate2.currentState.isInside(birdKey.currentState.getAsRect())) {
@@ -57,6 +60,15 @@ class _MainGameState extends State<MainGame> {
         });
       }
     });
+  }
+
+  void increaseVelocityIfValid() {
+    var score = widget.scoreFunction();
+    if (score > 0 && score % 10 == 0 && score < 101) {
+      gate1.currentState.increaseVelocity();
+      gate2.currentState.increaseVelocity();
+    }
+
   }
 
   @override

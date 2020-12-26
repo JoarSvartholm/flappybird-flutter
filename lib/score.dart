@@ -27,6 +27,10 @@ class SimpleScoreBoardState extends State<SimpleScoreBoard> {
     });
   }
 
+  int getScore() {
+    return score;
+  }
+
 
   @override
   Widget build(BuildContext context) {
