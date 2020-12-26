@@ -80,15 +80,11 @@ class _MainGameState extends State<MainGame> {
           ),
           Gate(
             key: gate1,
-            level: 0.1,
-            opening: 0.7,
             position: 0.75,
             duration: duration,
           ),
           Gate(
             key: gate2,
-            level: 0.2,
-            opening: 0.45,
             position: 0.75 + 0.5 + 0.2,
             duration: duration,
           ),
