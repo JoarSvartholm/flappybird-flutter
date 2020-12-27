@@ -1,3 +1,4 @@
+import 'package:flappybird/preferences.dart';
 import 'package:flutter/material.dart';
 
 class SimpleScoreBoard extends StatefulWidget {
@@ -10,15 +11,15 @@ class SimpleScoreBoard extends StatefulWidget {
 
 class SimpleScoreBoardState extends State<SimpleScoreBoard> {
   int score = 0;
-  int best = 0;
+  int best = preferences.bestScore;
 
-  void increaseScore() {
-    setState(() {
-      score += 1;
-      if (score > best) {
-        best = score;
-      }
-    });
+  void increaseScore() async {
+    score += 1;
+    if (score > best) {
+      best = score;
+      preferences.bestScore = best;
+    }
+    setState(() { });
   }
 
   void reset() {

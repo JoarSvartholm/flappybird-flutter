@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'HomePage.dart';
+import 'preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await preferences.init();
   runApp(FlappyApp());
 }
 
